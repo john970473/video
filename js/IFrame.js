@@ -1,5 +1,5 @@
 var tag = document.createElement('script');
-
+var id = "ivUOBdHu6VE";
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -25,7 +25,7 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     //height: '100%',
     width: '100%',
-    videoId: '9bAiXJoNdy0',
+    videoId: id,
     events: {
       // 'onReady': onPlayerReady,
       // 'onStateChange': onPlayerStateChange
@@ -65,7 +65,7 @@ function stopVideo() {
 }
 
 function play_context_one(index){
-    player.loadVideoById({videoId:"9bAiXJoNdy0",
+    player.loadVideoById({videoId:id,
                       startSeconds:context[index-1].start_time/1000,
                       endSeconds:context[index-1].end_time/1000,
                       suggestedQuality:"large"});
