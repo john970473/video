@@ -8,15 +8,9 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 //    after the API code downloads.
 var player;
 let context;
-$(document).ready(function(){
-  $.ajax({
-  method: "POST",
-  url: "context.php",
-  dataType: "json",
-  data: "param=context"
-   })
-  .done(function(data) {
-      context= data;
+$(document).ready(function() {
+  $.ajax({method: "POST", url: "context.php", dataType: "json", data: "param=context"}).done(function(data) {
+    context = data;
 
   });
 });
@@ -27,7 +21,7 @@ function onYouTubeIframeAPIReady() {
     width: '100%',
     videoId: id,
     events: {
-      // 'onReady': onPlayerReady,
+      'onReady': onPlayerReady,
       // 'onStateChange': onPlayerStateChange
     }
   });
@@ -36,7 +30,13 @@ function onYouTubeIframeAPIReady() {
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
   // event.target.loadVideoById("oWP9Riq-ZBg", 5,"large");
-  event.target.playVideo();
+  // event.target.playVideo();
+  setInterval(function(){ for (var i = 0; i < 20; i++) {
+    if (player.getCurrentTime() >= context[i].start_time / 1000 && player.getCurrentTime() <= context[i].end_time / 1000) {
+      if (i!=0) document.getElementById('ts' + (i)).style.backgroundColor = "white";
+      document.getElementById('ts' + (i + 1)).style.backgroundColor = "lightgray";
+    }
+  } }, 500);
 }
 
 // 5. The API calls this function when the player's state changes.
@@ -45,18 +45,17 @@ function onPlayerReady(event) {
 // var done = false;
 //
 // function onPlayerStateChange(event) {
-//
-//   if (event.data == YT.PlayerState.PLAYING) {
-//     while (true) {
-//         if(player.getCurrentTime() > transcript.data[1].t/1000){
-//           document.getElementById('ts'+ 2).style.backgroundColor = "lightgray";
-//         }
-//         if(player.getCurrentTime() > transcript.data[3].t/1000){
-//           document.getElementById('ts'+ 4).style.backgroundColor = "lightgray";
-//         }
+// 
+//   if (event.data == YT.PlayerState.PLAYING ) {
+//     console.log("FKKK")
+//     for (var i = 1; i <= 20; i++) {
+//       document.getElementById('ts' + i).style.backgroundColor = "white";
 //     }
-//
-//
+//     for (var i = 0; i < 20; i++) {
+//       if (player.getCurrentTime() >= context[i].start_time / 1000 && player.getCurrentTime() <= context[i].end_time / 1000) {
+//         document.getElementById('ts' + (i + 1)).style.backgroundColor = "lightgray";
+//       }
+//     }
 //   }
 // }
 
@@ -64,21 +63,23 @@ function stopVideo() {
   player.stopVideo();
 }
 
-function play_context_one(index){
-    player.loadVideoById({videoId:id,
-                      startSeconds:context[index-1].start_time/1000,
-                      endSeconds:context[index-1].end_time/1000,
-                      suggestedQuality:"large"});
-    // player.loadVideoById("9bAiXJoNdy0", context[index-1].start_time/1000,"large");
-    // setTimeout(pauseVideo, context[index-1].d);
-    for (var i=1 ; i<=20 ; i++){
-      document.getElementById('ts'+ i).style.backgroundColor = "white";
-    }
-    document.getElementById('ts'+ index).style.backgroundColor = "lightgray";
+function play_context_one(index) {
+  // player.loadVideoById({
+  //   videoId: id,
+  //   startSeconds: context[index - 1].start_time / 1000,
+  //   endSeconds: context[index - 1].end_time / 1000,
+  //   suggestedQuality: "large"
+  // });
+  player.loadVideoById(id, context[index-1].start_time/1000,"large");
+  setTimeout(pauseVideo, context[index-1].end_time - context[index-1].start_time);
+  for (var i = 1; i <= 20; i++) {
+    document.getElementById('ts' + i).style.backgroundColor = "white";
+  }
+  document.getElementById('ts' + index).style.backgroundColor = "lightgray";
 }
 function pauseVideo() {
   player.pauseVideo();
-  for (var i=1 ; i<=20 ; i++){
-    document.getElementById('ts'+ i).style.backgroundColor = "white";
+  for (var i = 1; i <= 20; i++) {
+    document.getElementById('ts' + i).style.backgroundColor = "white";
   }
 }
