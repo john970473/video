@@ -1,3 +1,13 @@
+<?php
+//get video id
+if(isset($_GET["id"]) && $_GET["id"]!="")
+{
+    $id = $_GET["id"];
+}
+ ?>
+
+
+<!-- origin html code -->
 <html lang="zh-TW">
 
 <head>
@@ -13,7 +23,11 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="./css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript"> var CLIENT_ID = '673381173216-1cg3p0mqapitdm647sqtn8umspgnncln'; var API_KEY = 'AIzaSyBejq9v2EcnUSjL5aR5CJ2jpOn_NL3oHoA'; var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"]; var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly"; function handleClientLoad() { gapi.load('client:auth2', initClient); } function initClient() { gapi.client.init({ apiKey: API_KEY, clientId: CLIENT_ID, discoveryDocs: DISCOVERY_DOCS, scope: SCOPES }).then(function () { putItIn(
 
+  '1MPSkCQ7Ase_ZmgwLbvmXG48X1txqeuwaUw0BkOyC7Jk',["sheet!B:B", "sheet!A:A"],["kkk", "ttt"], ["1", "1"]
+
+  ); }); } function putItIn(spreadsheet_id, ranges, tag_name, category) { gapi.client.sheets.spreadsheets.values.batchGet({ spreadsheetId: spreadsheet_id, ranges: ranges, }).then(function(response) { var result = response.result; if (result.valueRanges.length > 0) { for (i = 0; i < result.valueRanges.length; i++) { for (j = 0; j < result.valueRanges[i].values.length; j++) { var row = result.valueRanges[i].values[j]; var tags = document.getElementsByTagName(tag_name[i]); var col_or_row = ranges[i].split(":"); for (k = 0; k < row.length; k++) { var tag_id; Number(col_or_row[1]) ? tag_id = k : tag_id = j; if ( category[i] == "1" ) { l = 0; while(l < tags.length){ if(tags[l].attributes.getNamedItem("saver_id").nodeValue == tag_id){ tags[l].innerHTML = row[k]; } l++; } } else if ( category[i] == "2") { l = 0; while(l < tags.length){ if(tags[l].attributes.getNamedItem("saver_id").nodeValue == tag_id){ var img = document.createElement("img"); tags[l].appendChild(img); tags[l].childNodes[0].src = row[k]; } l++; } } else { l = 0; while(l < tags.length){ if(tags[l].attributes.getNamedItem("saver_id").nodeValue == tag_id){ var iframe = document.createElement("iframe"); tags[l].appendChild(iframe); tags[l].childNodes[0].src = row[k]; } l++; } } } } } } else { document.getElementsByTagName(tag_name[i])[0].innerHTML = 'No data found.'; } }, function(response) { var textnode = document.createTextNode('Error: ' + response.result.error.message); document.getElementsByTagName(tag_name[i])[0].parentNode.appendChild(textnode); }); } </script> <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"> </script>
 </head>
 
 <body>
@@ -26,14 +40,14 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="https://john970473.github.io/VoiceTube/">VoiceTube</a>
+                  <a class="navbar-brand" href="#">VoiceTube</a>
               </div>
 
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" >精選頻道 <b class="caret"></b></a>
+                    <a  href="#" class="dropdown-toggle" data-toggle="dropdown" > 精選頻道 <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                       <li><a href="#">中英文雙字幕影片</a></li>
                       <li><a href="#">深度英文演講</a></li>
@@ -282,7 +296,7 @@
       </div>
     </div>
   </div>
-
+  <div> <ttt saver_id="1"></ttt> </div>
   <script type="text/javascript" src="js/IFrame.js"></script>
   <script type="text/javascript" src="js/query_string.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
